@@ -18,6 +18,7 @@ const config: Config = {
         line: "rgb(var(--line) / <alpha-value>)",
         petrol: "rgb(var(--petrol) / <alpha-value>)",
         sprout: "rgb(var(--sprout) / <alpha-value>)",
+        danger: "rgb(var(--danger) / <alpha-value>)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],

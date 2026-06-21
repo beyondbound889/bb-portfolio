@@ -16,7 +16,10 @@ export function Personal() {
 
       <Stagger className="mt-14 grid gap-6 md:grid-cols-3">
         {personal.items.map((p) => (
-          <StaggerItem key={p.title} className="rounded-2xl border border-line bg-surface p-7">
+          <StaggerItem
+            key={p.title}
+            className="rounded-2xl border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-petrol/40 hover:shadow-[0_24px_60px_-20px_rgb(var(--petrol)/0.18)]"
+          >
             <Icon name={p.icon} className="text-petrol" />
             <h3 className="mt-4 font-display text-lg font-semibold text-ink">{p.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-slate">{p.body}</p>

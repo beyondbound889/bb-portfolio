@@ -24,8 +24,11 @@ export function Impact() {
 
       <Stagger className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
         {shown.map((m) => (
-          <StaggerItem key={m.label} className="bg-paper p-7">
-            <p className="font-display text-5xl font-semibold tracking-tight text-ink">
+          <StaggerItem
+            key={m.label}
+            className="group relative z-0 bg-paper p-7 transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:bg-surface hover:shadow-[0_24px_60px_-20px_rgb(var(--sprout)/0.22)]"
+          >
+            <p className="font-display text-5xl font-semibold tracking-tight text-ink transition-colors duration-300 group-hover:text-petrol">
               <CountUp to={m.value} prefix={m.prefix} suffix={m.suffix} />
             </p>
             <p className="mt-3 font-display text-sm font-semibold text-ink">{m.label}</p>

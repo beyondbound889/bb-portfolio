@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { nav, site } from "@/lib/content";
@@ -38,13 +38,9 @@ export function Navbar() {
 
         <div className="hidden items-center gap-8 md:flex">
           {nav.map((n) => (
-            <a
-              key={n.href}
-              href={n.href}
-              className="text-sm text-slate transition-colors hover:text-ink"
-            >
+            <MagneticLink key={n.href} href={n.href} className="text-sm text-slate transition-colors hover:text-ink">
               {n.label}
-            </a>
+            </MagneticLink>
           ))}
         </div>
 
@@ -53,7 +49,7 @@ export function Navbar() {
           <ThemeToggle />
           <a
             href="#contact"
-            className="hidden rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper transition-opacity hover:opacity-90 sm:inline-flex"
+            className="btn-shine hidden rounded-full bg-ink px-4 py-2 text-sm font-medium text-paper transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-8px_rgb(var(--petrol)/0.45)] sm:inline-flex"
           >
             Connect
           </a>
@@ -109,6 +105,51 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </header>
+  );
+}
+
+// ════════════════════════════════════════════════════════
+// MagneticLink — subtle cursor-pull on hover (desktop only;
+// reduced-motion / coarse pointers fall back to a plain link
+// with zero behaviour change).
+// ════════════════════════════════════════════════════════
+function MagneticLink({
+  href,
+  className,
+  children,
+}: {
+  href: string;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
+
+  const onMove = (e: MouseEvent<HTMLAnchorElement>) => {
+    if (typeof window === "undefined") return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const dx = (e.clientX - (rect.left + rect.width / 2)) * 0.25;
+    const dy = (e.clientY - (rect.top + rect.height / 2)) * 0.25;
+    el.style.transform = `translate(${dx}px, ${dy}px)`;
+  };
+
+  const onLeave = () => {
+    if (ref.current) ref.current.style.transform = "translate(0, 0)";
+  };
+
+  return (
+    <a
+      ref={ref}
+      href={href}
+      className={cn("magnetic-link", className)}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+    >
+      {children}
+    </a>
   );
 }
 

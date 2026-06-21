@@ -15,7 +15,10 @@ export function Focus() {
 
       <Stagger className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
         {focusAreas.map((f) => (
-          <StaggerItem key={f.title} className="group bg-paper p-7 transition-colors hover:bg-surface">
+          <StaggerItem
+            key={f.title}
+            className="group relative z-0 bg-paper p-7 transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:bg-surface hover:shadow-[0_24px_60px_-20px_rgb(var(--petrol)/0.22)]"
+          >
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-mist text-petrol transition-colors group-hover:bg-petrol group-hover:text-paper">
               <Icon name={f.icon} />
             </span>

@@ -62,7 +62,7 @@ export function BeyondBound() {
             />
           </div>
 
-          <div className="rounded-2xl border border-line bg-ink p-7 text-paper">
+          <div className="rounded-2xl border border-line bg-ink p-7 text-paper transition-shadow duration-300 hover:shadow-[0_30px_80px_-24px_rgba(0,0,0,0.5)]">
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-display text-2xl font-semibold">{b.product.name}</p>

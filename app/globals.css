@@ -12,6 +12,7 @@
   --line: 226 231 228; /* #E2E7E4 */
   --petrol: 14 92 87; /* #0E5C57 */
   --sprout: 47 163 124; /* #2FA37C */
+  --danger: 188 58 58; /* #BC3A3A — used only for form/error states, never decorative */
 }
 
 .dark {
@@ -24,6 +25,7 @@
   --line: 31 48 45; /* #1F302D */
   --petrol: 90 196 184; /* brighter teal for contrast */
   --sprout: 74 197 154; /* #4AC59A */
+  --danger: 224 110 110; /* #E06E6E */
 }
 
 * {
@@ -79,4 +81,161 @@ body {
   background-image: radial-gradient(rgb(var(--line)) 1px, transparent 1px);
   background-size: 22px 22px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black, transparent);
+}
+
+/* ══════════════════════════════════════════════════════════
+   AMBIENT BACKGROUND — fixed orbs + mouse spotlight.
+   Tuned subtle in both themes; brighter/larger blur in dark
+   mode where it actually reads, near-invisible on light paper.
+   ══════════════════════════════════════════════════════════ */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.ambient-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  animation: ambientDrift 24s ease-in-out infinite;
+}
+.ambient-orb-1 {
+  width: 46vw;
+  height: 46vw;
+  max-width: 620px;
+  max-height: 620px;
+  top: -12%;
+  left: -10%;
+  background: radial-gradient(ellipse, rgb(var(--petrol) / 0.10) 0%, transparent 70%);
+}
+.ambient-orb-2 {
+  width: 38vw;
+  height: 38vw;
+  max-width: 540px;
+  max-height: 540px;
+  bottom: -14%;
+  right: -8%;
+  background: radial-gradient(ellipse, rgb(var(--sprout) / 0.08) 0%, transparent 70%);
+  animation-duration: 30s;
+  animation-direction: reverse;
+}
+.dark .ambient-orb-1 { background: radial-gradient(ellipse, rgb(var(--petrol) / 0.18) 0%, transparent 70%); }
+.dark .ambient-orb-2 { background: radial-gradient(ellipse, rgb(var(--sprout) / 0.14) 0%, transparent 70%); }
+
+.ambient-spotlight {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    560px circle at var(--mx, 50%) var(--my, 40%),
+    rgb(var(--petrol) / 0.05) 0%,
+    transparent 60%
+  );
+}
+.dark .ambient-spotlight {
+  background: radial-gradient(
+    560px circle at var(--mx, 50%) var(--my, 40%),
+    rgb(var(--sprout) / 0.07) 0%,
+    transparent 60%
+  );
+}
+
+@keyframes ambientDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(3%, -4%) scale(1.05); }
+  66%      { transform: translate(-3%, 3%) scale(0.96); }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PREMIUM CURSOR (desktop / fine-pointer only)
+   ══════════════════════════════════════════════════════════ */
+@media (pointer: fine) {
+  html.cursor-active body { cursor: none; }
+  /* Never hide the native caret where people actually need to see it. */
+  html.cursor-active input,
+  html.cursor-active textarea,
+  html.cursor-active select,
+  html.cursor-active [contenteditable="true"] {
+    cursor: auto !important;
+  }
+
+  .cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 5px;
+    margin: -2.5px 0 0 -2.5px;
+    background: rgb(var(--petrol));
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    will-change: transform;
+  }
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    margin: -16px 0 0 -16px;
+    border: 1.5px solid rgb(var(--petrol) / 0.45);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    will-change: transform;
+    transition: width 0.25s cubic-bezier(0.16,1,0.3,1),
+                height 0.25s cubic-bezier(0.16,1,0.3,1),
+                margin 0.25s cubic-bezier(0.16,1,0.3,1),
+                background 0.25s, border-color 0.25s;
+  }
+  .cursor-ring.is-hovering {
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    background: rgb(var(--petrol) / 0.06);
+    border-color: rgb(var(--petrol) / 0.8);
+  }
+  .cursor-ring.is-clicking {
+    width: 22px;
+    height: 22px;
+    margin: -11px 0 0 -11px;
+    background: rgb(var(--petrol) / 0.18);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   BUTTON SHINE SWEEP — applied via .btn-shine alongside
+   existing Tailwind button classes (rounded-full bg-ink …).
+   ══════════════════════════════════════════════════════════ */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgb(255 255 255 / 0.16) 50%, transparent 60%);
+  background-size: 220% 100%;
+  background-position: 120% 0;
+  transition: background-position 0.7s cubic-bezier(0.16,1,0.3,1);
+  pointer-events: none;
+}
+.btn-shine:hover::after {
+  background-position: -20% 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   MAGNETIC NAV LINK — JS sets transform inline; this just
+   gives it a smooth spring-like return on release.
+   ══════════════════════════════════════════════════════════ */
+.magnetic-link {
+  display: inline-block;
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb { animation: none; }
 }

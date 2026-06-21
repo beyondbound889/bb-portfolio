@@ -20,7 +20,10 @@ export function Values() {
 
         <Stagger className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2">
           {values.map((v) => (
-            <StaggerItem key={v.title} className="bg-paper p-7">
+            <StaggerItem
+              key={v.title}
+              className="group relative z-0 bg-paper p-7 transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:bg-surface hover:shadow-[0_24px_60px_-20px_rgb(var(--petrol)/0.22)]"
+            >
               <Icon name={v.icon} className="text-petrol" />
               <h3 className="mt-4 font-display text-lg font-semibold text-ink">{v.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-slate">{v.body}</p>
@@ -45,7 +48,7 @@ export function Media() {
       <Stagger className="mt-14 grid gap-6 sm:grid-cols-2">
         {media.map((m) => (
           <StaggerItem key={m.title}>
-            <div className="flex h-full flex-col rounded-2xl border border-line bg-surface p-7">
+            <div className="flex h-full flex-col rounded-2xl border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-petrol/40 hover:shadow-[0_24px_60px_-20px_rgb(var(--petrol)/0.18)]">
               <p className="font-mono text-[11px] uppercase tracking-widest text-petrol">{m.kind}</p>
               <h3 className="mt-3 font-display text-xl font-semibold text-ink">{m.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-slate">{m.context}</p>

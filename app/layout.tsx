@@ -5,6 +5,8 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ScrollProgress } from "@/components/nav/ScrollProgress";
+import { AmbientBackground } from "@/components/ui/AmbientBackground";
+import { PremiumCursor } from "@/components/ui/PremiumCursor";
 import { Analytics } from "@/components/Analytics";
 import { site } from "@/lib/content";
 
@@ -99,6 +101,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="font-sans antialiased">
         <ThemeProvider>
+          <AmbientBackground />
+          <PremiumCursor />
           <ScrollProgress />
           {children}
         </ThemeProvider>
