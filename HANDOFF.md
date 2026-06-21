@@ -75,6 +75,94 @@ delete the `<PremiumCursor />` line in `app/layout.tsx` and the
 
 ---
 
+## 1b. Phase 2, items 2–4 — DONE this session
+
+Picked up the Phase 2 priority list below. Skipped item 1 (hero rebuild) —
+still on hold pending the video/photo asset, per the original plan. Shipped
+items 2, 3, and 4:
+
+- **Glass-morphism depth pass, dark mode only** — every card surface that
+  uses the `bg-surface`/`bg-paper` token (Focus, Impact, Values, Media,
+  Insights, BeyondBound's mission/vision/approach cards, Personal cards, the
+  Contact info links + form + success card) now gets `dark:backdrop-blur-xl
+  dark:backdrop-saturate-150` plus a translucent `dark:bg-surface/35–50` in
+  dark mode — pure Tailwind utility composition, no new CSS, **zero changes
+  to light mode**. Visually this is the biggest single change in this round:
+  in dark mode the ambient orbs from Phase 1 now bleed through every card,
+  which is genuinely the "obsidian glass" look the original spec wanted —
+  built the safe way, on top of the real component system, not the
+  abandoned inline-style branch mentioned in §0.
+  - Deliberately left the `bg-ink` Glycomics product showcase card alone —
+    it's already a solid brand-color block, not part of the paper/surface
+    system, and glassing it would fight the design rather than help it.
+- **Scroll-storytelling parallax** — new reusable `components/ui/ParallaxImage.tsx`
+  (a `next/image` wrapped in a scroll-linked `framer-motion` translateY,
+  same `useScroll`/`useTransform` pattern as Journey's rail fill from Phase
+  1). Wired into the two spots the handoff named: the Vision section's
+  background photo (`priyanshu-rooftop.png`) and the BeyondBound product
+  photo (`priyanshu-desk.png`). Both stay **Server Components** — the
+  parallax client logic is isolated entirely inside `ParallaxImage`, so
+  `BeyondBound.tsx` and `PersonalVision.tsx` didn't need `"use client"`.
+  Respects `prefers-reduced-motion` (locks to a static centered image).
+- **Form hardening** — added a time-trap anti-bot check (rejects submissions
+  faster than 2.5s after the form mounts — no real visitor reads and fills
+  a form that fast) alongside the existing Phase-1 honeypot, and wrapped the
+  form/success-card swap in an `aria-live="polite"` region so screen readers
+  announce "Message sent" or the error state. **Did not** build Cloudflare
+  Turnstile — checked Web3Forms' docs first and Turnstile support is a
+  **paid Pro feature** on their end, so wiring it now would just be dead
+  code until/unless that subscription exists. Flagging it here rather than
+  guessing.
+  - **Still needs a human step, can't be done from a sandbox**: get a free
+    key at web3forms.com and set `NEXT_PUBLIC_WEB3FORMS_KEY` in Vercel →
+    Project → Settings → Environment Variables. Until then the form keeps
+    working via the existing `mailto:` fallback, unchanged.
+- **Verified for real this time**: `npm install` succeeded in-sandbox (the
+  npm registry is reachable here, unlike last session), `npx tsc --noEmit`
+  is clean, and `npx next build` got all the way through TypeScript +
+  webpack compilation of every file before failing at the exact same
+  `fonts.googleapis.com` step noted in §7 below — confirming the new code
+  compiles cleanly and the only blocker is this sandbox's network allowlist,
+  not the changes themselves.
+
+---
+
+## 2b. How to apply Phase 2, items 2–4
+
+1. Pull the 1 new file + 7 changed files below into the matching paths.
+2. **No `npm install` needed** — zero new dependencies were added.
+3. `npm run dev`, check dark mode specifically (the glass effect is dark-mode-only
+   by design) across Focus, Impact, Values, Media, Insights, BeyondBound,
+   Personal, and Contact. Scroll past the Vision section and the BeyondBound
+   product photo to see the parallax drift.
+4. `npx tsc --noEmit` should print nothing (clean).
+5. Commit + push (commands below) — Vercel auto-deploys on push to `main`.
+
+### Files touched (paths relative to repo root)
+```
+components/sections/BeyondBound.tsx      (modified)
+components/sections/Contact.tsx          (modified)
+components/sections/Focus.tsx            (modified)
+components/sections/Impact.tsx           (modified)
+components/sections/Insights.tsx         (modified)
+components/sections/PersonalVision.tsx   (modified)
+components/sections/ValuesMedia.tsx      (modified)
+components/ui/ParallaxImage.tsx          (NEW)
+```
+
+### Git commands
+```bash
+git add components/sections/BeyondBound.tsx components/sections/Contact.tsx \
+  components/sections/Focus.tsx components/sections/Impact.tsx \
+  components/sections/Insights.tsx components/sections/PersonalVision.tsx \
+  components/sections/ValuesMedia.tsx components/ui/ParallaxImage.tsx
+
+git commit -m "Phase 2 (2-4): dark-mode glass cards, scroll parallax on Vision/BeyondBound, form hardening"
+git push origin main
+```
+
+---
+
 ## 2. How to apply Phase 1 (do this first)
 
 1. Pull the 13 changed files + 2 new files from the delivery package into
@@ -107,39 +195,35 @@ components/ui/PremiumCursor.tsx          (NEW)
 
 ---
 
-## 3. Phase 2 — recommended next (not started)
+## 3. Phase 2 — remaining items (not started)
 
-Priority order, each is independently shippable:
+Priority order, each is independently shippable. Items 2–4 from the
+original list are done (see §1b above) — renumbered here to just the
+remaining work:
 
-1. **Hero rebuild** — deliberately skipped this round; user is producing a
-   video/photo asset for it. When ready: `components/sections/Hero.tsx` is
-   currently a calm single-portrait layout. The 5 real photos already live
-   in `public/images/` (`priyanshu-portrait.png`, `priyanshu-desk.png`,
+1. **Hero rebuild** — still on hold; user is producing a video/photo asset
+   for it. When ready: `components/sections/Hero.tsx` is currently a calm
+   single-portrait layout. The 5 real photos already live in
+   `public/images/` (`priyanshu-portrait.png`, `priyanshu-desk.png`,
    `priyanshu-window.png`, `priyanshu-office.png`, `priyanshu-rooftop.png`)
    — these are the same images uploaded to this chat, already in the repo.
    A Sahil-Bloom-style rotating photo stack with Ken Burns zoom + swipe is
    very buildable from these real assets (no synthetic imagery needed —
    see §6). If a real video file is provided, swap `<Image>` for a muted
-   autoplay `<video>` with the same dark-overlay treatment.
-2. **Glass-morphism depth pass for dark mode** — current `.dark` tokens are
-   solid colors; could add a `backdrop-blur` + translucent-surface variant
-   activated only in dark mode for card surfaces, so dark mode gets the
-   "glass" look the spec asked for without changing light mode at all.
-3. **Scroll-storytelling polish** — `Vision` section background image,
-   `BeyondBound` product card: subtle parallax on scroll (framer-motion
-   `useScroll` + `useTransform`, same pattern as the new Journey fill line).
-4. **Form hardening** — Web3Forms key isn't set yet (`NEXT_PUBLIC_WEB3FORMS_KEY`
-   env var), so the form currently falls back to a `mailto:` link. Get a
-   free key at web3forms.com and add it to Vercel env vars to make the form
-   submit silently instead.
-5. **Real Insights articles** — `lib/content.ts` → `insights[]` all point to
+   autoplay `<video>` with the same dark-overlay treatment. The new
+   `components/ui/ParallaxImage.tsx` from this session can be a building
+   block here too (just needs a crossfade/stack wrapper around it).
+2. **Real Insights articles** — `lib/content.ts` → `insights[]` all point to
    the same LinkedIn profile URL right now (honest placeholder). Swap in
    specific post URLs as they're picked.
-6. **Command palette polish** — already functional (`⌘K`), could get the
-   same glass/glow treatment as the rest of Phase 1.
-7. **Lighthouse/axe pass** on the deployed URL once Phase 2 visual work
-   lands — confirm CLS, contrast, and reduced-motion are all still clean
-   after the new effects layer.
+3. **Command palette polish** — already functional (`⌘K`), could get the
+   same glass/glow treatment as the rest of Phase 1/2.
+4. **Lighthouse/axe pass** on the deployed URL now that the glass + parallax
+   effects layer has landed — confirm CLS, contrast, and reduced-motion are
+   all still clean. The `backdrop-blur` cards are the one thing worth a
+   second look on lower-end Android devices specifically; if frame rate sags
+   there, the fix is reducing `backdrop-blur-xl` to `backdrop-blur-md` on
+   the worst-offending sections, not removing the effect.
 
 ---
 
@@ -165,6 +249,7 @@ bb-portfolio/
 │   ├── ui/                   ← shared primitives — NEW files go here
 │   │   ├── AmbientBackground.tsx   ← NEW (Phase 1)
 │   │   ├── PremiumCursor.tsx       ← NEW (Phase 1)
+│   │   ├── ParallaxImage.tsx       ← NEW (Phase 2) — scroll-linked image drift
 │   │   ├── Reveal.tsx              (scroll-reveal wrapper, framer-motion)
 │   │   ├── Section.tsx             (section/eyebrow wrapper)
 │   │   ├── CountUp.tsx
