@@ -1,9 +1,9 @@
-import Image from "next/image";
 import { ArrowUpRight, Check } from "lucide-react";
 import { beyondBound } from "@/lib/content";
 import { Section, Eyebrow } from "@/components/ui/Section";
 import { Reveal } from "@/components/ui/Reveal";
 import { SteadyLine } from "@/components/ui/SteadyLine";
+import { ParallaxImage } from "@/components/ui/ParallaxImage";
 
 export function BeyondBound() {
   const b = beyondBound;
@@ -30,15 +30,15 @@ export function BeyondBound() {
 
       <div className="mt-12 grid gap-6 lg:grid-cols-2">
         <Reveal className="grid gap-6">
-          <div className="rounded-2xl border border-line bg-surface p-7">
+          <div className="rounded-2xl border border-line bg-surface p-7 dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150">
             <p className="font-mono text-[11px] uppercase tracking-widest text-petrol">Mission</p>
             <p className="mt-3 text-lg leading-relaxed text-ink">{b.mission}</p>
           </div>
-          <div className="rounded-2xl border border-line bg-surface p-7">
+          <div className="rounded-2xl border border-line bg-surface p-7 dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150">
             <p className="font-mono text-[11px] uppercase tracking-widest text-petrol">Vision</p>
             <p className="mt-3 text-lg leading-relaxed text-ink">{b.vision}</p>
           </div>
-          <div className="rounded-2xl border border-line bg-surface p-7">
+          <div className="rounded-2xl border border-line bg-surface p-7 dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150">
             <p className="font-display text-base font-semibold text-ink">{b.approachTitle}</p>
             <ul className="mt-4 space-y-3">
               {b.approach.map((a) => (
@@ -52,15 +52,13 @@ export function BeyondBound() {
         </Reveal>
 
         <Reveal delay={0.1} className="flex flex-col gap-6">
-          <div className="relative aspect-[16/11] overflow-hidden rounded-2xl border border-line">
-            <Image
-              src="/images/priyanshu-desk.png"
-              alt="Priyanshu Chauhan working alongside Beyond Bound products"
-              fill
-              sizes="(max-width: 1024px) 90vw, 560px"
-              className="object-cover"
-            />
-          </div>
+          <ParallaxImage
+            src="/images/priyanshu-desk.png"
+            alt="Priyanshu Chauhan working alongside Beyond Bound products"
+            sizes="(max-width: 1024px) 90vw, 560px"
+            strength={26}
+            wrapperClassName="aspect-[16/11] rounded-2xl border border-line"
+          />
 
           <div className="rounded-2xl border border-line bg-ink p-7 text-paper transition-shadow duration-300 hover:shadow-[0_30px_80px_-24px_rgba(0,0,0,0.5)]">
             <div className="flex items-center justify-between">

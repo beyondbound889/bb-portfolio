@@ -26,7 +26,7 @@ export function Impact() {
         {shown.map((m) => (
           <StaggerItem
             key={m.label}
-            className="group relative z-0 bg-paper p-7 transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:bg-surface hover:shadow-[0_24px_60px_-20px_rgb(var(--sprout)/0.22)]"
+            className="group relative z-0 bg-paper p-7 transition-all duration-300 hover:z-10 hover:-translate-y-1 hover:bg-surface hover:shadow-[0_24px_60px_-20px_rgb(var(--sprout)/0.22)] dark:bg-surface/35 dark:backdrop-blur-xl dark:backdrop-saturate-150 dark:hover:bg-surface/60"
           >
             <p className="font-display text-5xl font-semibold tracking-tight text-ink transition-colors duration-300 group-hover:text-petrol">
               <CountUp to={m.value} prefix={m.prefix} suffix={m.suffix} />

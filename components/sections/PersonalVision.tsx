@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { personal, vision } from "@/lib/content";
 import { Section, Eyebrow } from "@/components/ui/Section";
 import { Reveal, Stagger, StaggerItem } from "@/components/ui/Reveal";
 import { Icon } from "@/components/ui/Icon";
+import { ParallaxImage } from "@/components/ui/ParallaxImage";
 
 export function Personal() {
   return (
@@ -18,7 +18,7 @@ export function Personal() {
         {personal.items.map((p) => (
           <StaggerItem
             key={p.title}
-            className="rounded-2xl border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-petrol/40 hover:shadow-[0_24px_60px_-20px_rgb(var(--petrol)/0.18)]"
+            className="rounded-2xl border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-petrol/40 hover:shadow-[0_24px_60px_-20px_rgb(var(--petrol)/0.18)] dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150 dark:hover:bg-surface/70"
           >
             <Icon name={p.icon} className="text-petrol" />
             <h3 className="mt-4 font-display text-lg font-semibold text-ink">{p.title}</h3>
@@ -34,12 +34,13 @@ export function Vision() {
   return (
     <section id="vision" className="relative overflow-hidden px-6 py-28 sm:py-40">
       <div className="absolute inset-0 -z-10">
-        <Image
+        <ParallaxImage
           src="/images/priyanshu-rooftop.png"
           alt=""
-          fill
           sizes="100vw"
-          className="object-cover object-center opacity-[0.14] dark:opacity-[0.10]"
+          strength={70}
+          wrapperClassName="h-full w-full"
+          className="object-center opacity-[0.14] dark:opacity-[0.10]"
         />
         <div className="absolute inset-0 bg-paper/40" />
       </div>

@@ -24,7 +24,7 @@ export function Insights() {
               href={a.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-petrol hover:shadow-[0_24px_60px_-20px_rgb(var(--petrol)/0.22)]"
+              className="group flex h-full flex-col rounded-2xl border border-line bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:border-petrol hover:shadow-[0_24px_60px_-20px_rgb(var(--petrol)/0.22)] dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150 dark:hover:bg-surface/70"
             >
               <p className="font-mono text-[11px] uppercase tracking-widest text-petrol">{a.kind}</p>
               <h3 className="mt-4 font-display text-lg font-semibold leading-snug text-ink">{a.title}</h3>

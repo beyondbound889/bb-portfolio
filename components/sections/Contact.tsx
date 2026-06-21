@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -22,6 +22,12 @@ type FormValues = z.infer<typeof schema>;
 
 export function Contact() {
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
+  // Time-trap anti-bot check, paired with the honeypot field below: a real
+  // visitor needs at least a couple of seconds to read and fill the form;
+  // scripted submitters that fire instantly on page load get silently
+  // no-op'd the same way a tripped honeypot does. Pure client-side heuristic
+  // — zero dependencies, zero cost, no account/key required.
+  const mountedAt = useRef(Date.now());
   const {
     register,
     handleSubmit,
@@ -33,8 +39,10 @@ export function Contact() {
   });
 
   const onSubmit = async (raw: FormValues) => {
-    // Honeypot tripped → silently pretend success, do nothing further.
-    if (raw.company) {
+    // Honeypot tripped, or submitted implausibly fast for a human to have
+    // actually read the form → silently pretend success, do nothing further.
+    const tooFast = Date.now() - mountedAt.current < 2500;
+    if (raw.company || tooFast) {
       setStatus("done");
       return;
     }
@@ -88,7 +96,7 @@ export function Contact() {
           <div className="mt-8 flex flex-col gap-3">
             <a
               href={`mailto:${site.email}`}
-              className="group inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-sm text-ink transition-colors hover:border-petrol"
+              className="group inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-sm text-ink transition-colors hover:border-petrol dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150"
             >
               <Mail size={16} className="text-petrol" />
               {site.email}
@@ -97,7 +105,7 @@ export function Contact() {
               href={site.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-sm text-ink transition-colors hover:border-petrol"
+              className="group inline-flex items-center gap-3 rounded-xl border border-line bg-surface px-4 py-3 text-sm text-ink transition-colors hover:border-petrol dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150"
             >
               <Linkedin size={16} className="text-petrol" />
               LinkedIn — Priyanshu Chauhan
@@ -106,8 +114,9 @@ export function Contact() {
         </Reveal>
 
         <Reveal delay={0.1}>
+          <div aria-live="polite" role="status">
           {status === "done" ? (
-            <div className="flex h-full min-h-[20rem] flex-col items-start justify-center rounded-2xl border border-line bg-surface p-8">
+            <div className="flex h-full min-h-[20rem] flex-col items-start justify-center rounded-2xl border border-line bg-surface p-8 dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150">
               <span className="grid h-12 w-12 place-items-center rounded-full bg-sprout/15 text-sprout">
                 <Check size={22} />
               </span>
@@ -117,7 +126,7 @@ export function Contact() {
           ) : (
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="grid gap-4 rounded-2xl border border-line bg-surface p-7"
+              className="grid gap-4 rounded-2xl border border-line bg-surface p-7 dark:bg-surface/50 dark:backdrop-blur-xl dark:backdrop-saturate-150"
               noValidate
             >
               {/* Honeypot — invisible to real visitors, hidden from screen readers and tab order.
@@ -199,6 +208,7 @@ export function Contact() {
               </button>
             </form>
           )}
+          </div>
         </Reveal>
       </div>
 
