@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/nav/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { TrustBanner } from "@/components/ui/TrustBanner";
 import { Philosophy } from "@/components/sections/Philosophy";
 import { Journey } from "@/components/sections/Journey";
 import { Focus } from "@/components/sections/Focus";
@@ -17,6 +18,7 @@ export default function Page() {
       <Navbar />
       <main>
         <Hero />
+        <TrustBanner />
         <Philosophy />
         <Journey />
         <Focus />

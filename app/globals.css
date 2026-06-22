@@ -239,3 +239,125 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .ambient-orb { animation: none; }
 }
+
+/* ══════════════════════════════════════════════════════════
+   PHASE 3 ADDITIONS
+   ══════════════════════════════════════════════════════════ */
+
+/* Typewriter cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.animate-blink {
+  animation: blink 1.1s ease-in-out infinite;
+}
+
+/* Scroll progress bar — upgraded: gradient instead of flat teal */
+.scroll-progress-bar {
+  background: linear-gradient(90deg, rgb(var(--petrol)), rgb(var(--sprout)));
+}
+
+/* Photo stack Ken Burns — ensure smooth transitions */
+.photo-stack-img {
+  will-change: transform, opacity;
+}
+
+/* Trust banner ticker — smooth GPU scroll */
+.trust-ticker {
+  will-change: transform;
+}
+
+/* Glucose chart SVG path draw animation */
+.glucose-path {
+  stroke-dasharray: 3000;
+  stroke-dashoffset: 3000;
+  transition: stroke-dashoffset 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glucose-path.in-view {
+  stroke-dashoffset: 0;
+}
+
+/* Enhanced card hover depth for Phase 3 */
+.card-depth {
+  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.35s cubic-bezier(0.16,1,0.3,1),
+              border-color 0.35s ease;
+}
+.card-depth:hover {
+  transform: translateY(-4px);
+}
+
+/* Pull-quote animated border */
+.quote-border {
+  position: relative;
+}
+.quote-border::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, rgb(var(--petrol)), rgb(var(--sprout)));
+  border-radius: 2px;
+}
+
+/* Ping animation for live indicator dot */
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Floating chip shimmer */
+@keyframes chipFloat {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-4px); }
+}
+.chip-float {
+  animation: chipFloat 3s ease-in-out infinite;
+}
+
+/* Gradient text utility */
+.text-gradient-petrol {
+  background: linear-gradient(135deg, rgb(var(--petrol)), rgb(var(--sprout)));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Phase 3 — scroll progress: make it 2px with gradient */
+.scroll-progress-gradient {
+  height: 2px;
+  background: linear-gradient(90deg, rgb(var(--petrol)) 0%, rgb(var(--sprout)) 50%, rgb(var(--petrol)) 100%);
+}
+
+/* Footer brand separator */
+.footer-separator {
+  background: linear-gradient(90deg, transparent, rgb(var(--petrol) / 0.4), transparent);
+  height: 1px;
+}
+
+/* Media card bottom bar */
+.media-card-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, rgb(var(--petrol)), rgb(var(--sprout)));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.group:hover .media-card-bar {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blink,
+  .chip-float { animation: none; }
+  .trust-ticker { animation: none; }
+}
