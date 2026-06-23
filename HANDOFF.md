@@ -1,200 +1,284 @@
-# HANDOFF — Priyanshu Chauhan portfolio, premium overhaul
-
-Repo: https://github.com/beyondbound889/bb-portfolio
-Live: https://priyanshu-chauhan.vercel.app/
-Stack: Next.js 15 (App Router) · React 19 · TypeScript (strict) · Tailwind v3.4 · framer-motion 11
-
-> Paste this whole file into a new Claude chat as the first message, along with
-> "continue Phase 4 of the bb-portfolio premium overhaul" — it has everything
-> needed to pick this up cold.
+# Phase 5 Handoff — bb-portfolio
+**Date:** June 22, 2026  
+**Session:** Claude (Phase 5 complete)  
+**Status:** ✅ Zero TypeScript errors — all new components compile clean
 
 ---
 
-## 0. The one thing to understand before touching anything
+## What Changed in This Session
 
-This repo already has a **complete, working, well-built site** — real content
-written carefully in `lib/content.ts` (every claim sourced/flagged), TypeScript
-compiles clean, all 12 sections built, light/dark theme via `next-themes`.
+### New / replaced files
 
-**Do not invent biography, numbers, or claims.** `lib/content.ts` has a
-`TODO(verify)` convention — respect it.
+| File | Status | What it does |
+|---|---|---|
+| `app/page.tsx` | REPLACED | New section order — 17 sections, marquee gone |
+| `app/globals.css` | MODIFIED | CSS variable aliases + Phase 5 overrides + dark mode input fix |
+| `components/sections/CredentialsBelt.tsx` | NEW | Structured credential grid + animated stat counters |
+| `components/sections/PhilosophyQuoteSection.tsx` | NEW | Word-by-word animated quote + Lessons Learned cards |
+| `components/sections/HealthcareGap.tsx` | NEW | "The Insight" section — credibility gap market story |
+| `components/sections/InstagramVideoSection.tsx` | NEW | Lazy-loaded Instagram reel embed |
+| `components/sections/EnhancedJourneySection.tsx` | NEW | Cinematic 8-chapter scroll timeline (replaces Journey) |
+| `components/sections/CGMSection.tsx` | NEW | Glucose chart preserved from old Journey — standalone section |
+| `components/sections/FutureVisionSection.tsx` | NEW | Fixed cinematic vision — image visible in both light/dark |
 
----
+### Bugs fixed before delivery
 
-## 1. Phase 1 — DONE
-
-- Fixed contact form validation bug (zodResolver wired up)
-- Journey timeline scroll-fill gradient
-- Premium interaction layer: AmbientBackground, PremiumCursor, magnetic nav, card hover glows, btn-shine
-
-## 2. Phase 2 — DONE
-
-- Glassmorphism dark-mode depth pass on all card surfaces
-- ParallaxImage primitive (useScroll + useTransform) on Vision + BeyondBound
-- Form hardening: time-trap + honeypot + aria-live
-
-## 3. Phase 3 — DONE (this session)
-
-**All files verified `npx tsc --noEmit` clean. Zero new npm dependencies.**
-
-### What was built:
-
-**NEW FILES:**
-- `components/ui/GlucoseChart.tsx` — animated SVG data viz showing founder's CGM self-observation.
-  Two curves drawn via framer-motion stroke-dashoffset on scroll-enter. **This is the biggest
-  visual differentiator vs. the competitor site.** Shows up inside Journey section.
-- `components/ui/TrustBanner.tsx` — auto-scrolling horizontal ticker of credentials, institutions,
-  and milestones. Positioned immediately below hero. Competitor has nothing like this.
-
-**HEAVILY UPGRADED FILES:**
-- `components/sections/Hero.tsx` — **Ken Burns rotating photo stack** using all 5 existing images
-  (`priyanshu-portrait.png`, `priyanshu-window.png`, `priyanshu-desk.png`, `priyanshu-office.png`,
-  `priyanshu-rooftop.png`). Photo dots let user jump directly. Ken Burns zoom + crossfade.
-  **Typewriter headline** cycling through 4 phrases. Two floating context chips (glass-morphism).
-  Live pulsing indicator dot on eyebrow badge.
-- `components/sections/Journey.tsx` — Fixed timeline alignment (dot now precisely on the rail line),
-  refactored spacing using `space-y-0` + direct `left: 6px`. **GlucoseChart injected at the bottom**
-  with narrative framing. Cards animate in on hover with glass bg.
-- `components/sections/Philosophy.tsx` — Upgraded to **3-column principle mini-cards** (Measure /
-  Prove / Build), pull-quote pills in left column, quote overlay text on the image, founder avatar
-  attribution on the big blockquote card.
-- `components/sections/BeyondBound.tsx` — Brand badge, animated approach checklist (framer stagger),
-  product card now has "Visit on Amazon" CTA button inside.
-- `components/sections/ValuesMedia.tsx` — Values cards get **numbered watermarks** (01/02/03),
-  Media cards get **gradient bottom accent bar** on hover.
-- `components/sections/Insights.tsx` — Color-coded kind badges (petrol/sprout/amber), **LinkedIn CTA
-  strip** at bottom.
-- `components/sections/Impact.tsx` — Bottom accent bar on each metric card, honesty footnote.
-- `components/sections/PersonalVision.tsx` — Vision closing quote now in a branded blockquote card
-  with petrol background, founder attribution.
-- `components/sections/Footer.tsx` — Full 4-column redesign: brand column with mini SteadyLine motif,
-  navigate, Beyond Bound links (with disclaimer), quick CTA. Gradient top border. "Let's talk" CTA.
-- `components/nav/ScrollProgress.tsx` — Upgraded from flat teal to petrol→sprout gradient bar.
-- `app/globals.css` — Added: blink keyframe for typewriter cursor, animate-ping keyframe, text-gradient
-  utility, chip-float animation, scroll-progress-gradient class, footer/card CSS helpers.
-- `app/page.tsx` — Added `<TrustBanner />` between Hero and Philosophy.
-
-### Key advantages over competitor site (portfolio-website-eight-alpha-92.vercel.app):
-1. **Data visualization** — competitor has zero charts. GlucoseChart is a unique story-telling asset.
-2. **Dark mode** — competitor is dark-only (no toggle), Priyanshu's site has full light+dark.
-3. **Typewriter + rotating photos** — competitor's hero is static single portrait.
-4. **Trust banner** — competitor has no credential ticker.
-5. **Custom cursor + ambient orbs** — competitor has a basic floating dot only.
-6. **Command palette** (⌘K) — competitor has none.
-7. **Glassmorphism cards** — competitor's are flat colored boxes.
-8. **Scroll progress gradient bar** — competitor's is a thin teal line.
-9. **Numbered watermarks on value cards** — competitor has plain cards.
-10. **4-column footer with SteadyLine motif** — competitor's footer is minimal 3 links.
-
-### Competitor weaknesses / mistakes NOT to repeat:
-- Intro "slideshow" with 5 slides is slow and feels like a loading screen; users hit Skip Intro.
-- No dark mode toggle at all — forcing dark on everyone.
-- "Founder Evolution" tracker (Soil/Corporate/Founder) is static with zero animation.
-- Random floating dot cursor that wanders the screen without tracking mouse — feels broken.
-- Quote sections ("Health advice is easy to give.") are just centered white text on dark — no framing.
-- No data visualization of any kind — purely text-and-photo.
-- No command palette or keyboard shortcuts.
-- Footer has only 3 social links; no navigation, no context.
+| Bug | Root cause | Fix |
+|---|---|---|
+| FutureVision image pale/invisible | Old `Vision` used `opacity-[0.13]` + paper gradient overlay | New component: `brightness(0.55)` filter + dark overlay ensures contrast |
+| FutureVision dark mode black | Overlay was `from-paper via-paper/50 to-paper` = fully opaque black | Replaced with `rgba(0,0,0,0.55–0.75)` gradient |
+| Wrong image path | New component referenced `/images/future-vision-bg.jpg` (doesn't exist) | Fixed to `/images/priyanshu-rooftop.png` |
+| CSS variable mismatch | New components used `--background/--foreground` etc; project uses `--paper/--ink` | Added aliases in `:root` and `.dark` in globals.css |
+| TypeScript parse error | PhilosophyQuoteSection had `'The market doesn't care'` — apostrophe inside single-quoted string | Changed outer quotes to double-quotes on those strings |
+| Broken `rgba(var())` CSS | Journey sticky header used `rgba(var(--background-rgb, 255,255,255), 0.92)` — doesn't work cross-browser | Replaced with `rgb(var(--paper) / 0.92)` which uses modern slash syntax and the project's token |
+| Unused `embedLoaded` state | `InstagramVideoSection` set state it never read | Removed the state + import entirely |
+| Unused imports | `useEffect` in FutureVisionSection, `useScroll/useTransform` in EnhancedJourneySection | All cleaned up |
+| GlucoseChart lost | Old `Journey.tsx` had the CGM chart; `EnhancedJourneySection` didn't include it | Extracted into standalone `CGMSection.tsx` placed immediately after the Journey |
+| Contact inputs dark mode | `.input` background was `rgb(var(--paper))` = near-black in dark mode | Added `.dark .input { background: rgb(var(--surface)) }` override |
 
 ---
 
-## 4. Phase 4 — Remaining items (not started)
+## Final Section Order
 
-Priority order, all independently shippable:
-
-1. **Intro animation / page-load sequence** — a subtle cinematic entry: body fades from black to paper,
-   then hero elements stagger in. The `AmbientBackground` orbs could drift in simultaneously. ~30 lines
-   in `app/layout.tsx` wrapping `<main>` in a `motion.div`.
-
-2. **Command palette glass upgrade** — `components/nav/CommandPalette.tsx` uses plain `cmdk` defaults.
-   Apply the same `dark:bg-surface/60 dark:backdrop-blur-xl` treatment + search results get kind badges
-   like the Insights cards.
-
-3. **Real article URLs for Insights** — currently all `href` values point to Priyanshu's LinkedIn profile
-   root. Once specific post URLs are available, swap them in `lib/content.ts` → `insights[]`.
-
-4. **Web3Forms key** — add `NEXT_PUBLIC_WEB3FORMS_KEY` in Vercel → Project → Settings → Environment
-   Variables (free key at web3forms.com). Without it the form works via mailto: fallback.
-
-5. **Lighthouse / axe pass** on deployed URL — confirm CLS is clean after the photo stack (aspect ratio
-   is preserved, should be fine), `backdrop-filter` frame rate on mid-range Android.
-
-6. **OG image update** — `public/og/og.png` is the current 1200×630 social card. Regenerate it to
-   reflect Phase 3 changes (new hero aesthetic). Can be done with a simple screenshot of the deployed
-   hero and a Figma/Canva edit to add the Beyond Bound® brand mark.
+```
+Hero
+CredentialsBelt          ← replaces TrustBanner marquee
+PhilosophyQuoteSection   ← animated quote + Lessons Learned
+Philosophy               ← existing "My Story"
+HealthcareGap            ← new: market insight section
+InstagramVideoSection    ← new: lazy reel embed
+EnhancedJourneySection   ← replaces Journey (cinematic)
+CGMSection               ← preserved glucose chart
+Focus                    ← existing
+BeyondBound              ← existing
+Impact                   ← existing
+Insights                 ← existing
+Values                   ← existing
+Media                    ← existing
+Personal                 ← existing
+FutureVisionSection      ← replaces Vision (fixed)
+Contact                  ← existing
+Footer
+```
 
 ---
 
-## 5. Files to commit for Phase 3
+## Step-by-Step Integration Guide
+
+### Prerequisites
+- Node.js 18+ installed
+- Git configured with access to `github.com/beyondbound889/bb-portfolio`
+- You have the repo cloned locally (or clone fresh)
+
+---
+
+### Step 1 — Clone or pull the latest
 
 ```bash
-git add \
-  app/globals.css \
-  app/page.tsx \
-  components/sections/BeyondBound.tsx \
-  components/sections/Hero.tsx \
-  components/sections/Impact.tsx \
-  components/sections/Insights.tsx \
-  components/sections/Journey.tsx \
-  components/sections/PersonalVision.tsx \
-  components/sections/Philosophy.tsx \
-  components/sections/ValuesMedia.tsx \
-  components/sections/Footer.tsx \
-  components/nav/ScrollProgress.tsx \
-  components/ui/GlucoseChart.tsx \
-  components/ui/TrustBanner.tsx \
-  HANDOFF.md
+# If you don't have the repo yet:
+git clone https://github.com/beyondbound889/bb-portfolio.git
+cd bb-portfolio
 
-git commit -m "Phase 3: Ken Burns hero + typewriter, GlucoseChart data viz, TrustBanner, philosophy upgrade, timeline fix, gradient scroll bar, premium footer"
+# If you already have it cloned:
+cd bb-portfolio
+git pull origin main
+```
+
+---
+
+### Step 2 — Install dependencies (if first time)
+
+```bash
+npm install
+```
+
+---
+
+### Step 3 — Copy the new/modified files
+
+Copy the following files from the session output into your local repo. These are the **complete, final versions** — not patches.
+
+**Files to copy (replace existing if present):**
+
+```
+app/page.tsx
+app/globals.css
+components/sections/CredentialsBelt.tsx
+components/sections/PhilosophyQuoteSection.tsx
+components/sections/HealthcareGap.tsx
+components/sections/InstagramVideoSection.tsx
+components/sections/EnhancedJourneySection.tsx
+components/sections/FutureVisionSection.tsx
+components/sections/CGMSection.tsx          ← NEW file, doesn't exist yet
+```
+
+> **Do NOT delete** `components/sections/Journey.tsx` or `components/sections/PersonalVision.tsx` yet.  
+> They are no longer imported in `page.tsx` but still have their exports intact.  
+> Archive them after you confirm the new build is working.
+
+---
+
+### Step 4 — Verify locally
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:3000` and check:
+
+1. **No marquee strip** — the scrolling ticker should be gone. A clean credential grid should appear below the Hero.
+2. **Philosophy quote** — scroll down. The quote *"Health advice is easy to give. Trust is harder to earn."* should animate word by word.
+3. **Journey** — should now be a cinematic timeline with large chapter numbers (01–08) that subtly reveal on scroll.
+4. **CGM Chart** — should appear immediately after the Journey section. Both a "Season 1" and "Season 2" (or toggle) chart should render.
+5. **Future Vision** — the rooftop photo background must be clearly visible (not invisible). White text on top.
+6. **Dark mode** — toggle dark mode and verify:
+   - Future Vision: rooftop image still visible (not black)
+   - Contact form inputs: slightly lighter background, not camouflaged
+   - Credential grid: cards readable
+
+---
+
+### Step 5 — Fix any image path issue (if needed)
+
+If the Future Vision background is still not showing, check that this file exists:
+
+```bash
+ls public/images/priyanshu-rooftop.png
+```
+
+If missing, the image may be at a different path. Update line ~93 in `FutureVisionSection.tsx`:
+
+```css
+background-image: url('/images/YOUR-ACTUAL-IMAGE.png');
+```
+
+---
+
+### Step 6 — Type check (optional sanity check)
+
+```bash
+npx tsc --noEmit
+```
+
+Expected output: nothing (zero errors). Any error here needs to be resolved before deploying.
+
+---
+
+### Step 7 — Build for production
+
+```bash
+npm run build
+```
+
+If this fails **only** with a Google Fonts network error (common in CI/CD/restricted networks), that's not a code bug. The live Vercel build will succeed because Vercel has full internet access. If it fails with a code error, fix that before continuing.
+
+---
+
+### Step 8 — Git commit and push
+
+```bash
+# Stage all changes
+git add -A
+
+# Commit with a descriptive message
+git commit -m "Phase 5: new sections, FutureVision fix, marquee removal, CGM preserved
+
+- Replace TrustBanner marquee with CredentialsBelt (credential grid + stat counters)
+- Add PhilosophyQuoteSection (word-by-word animated quote + Lessons Learned)
+- Add HealthcareGap section (market insight / credibility gap story)
+- Add InstagramVideoSection (lazy-loaded reel embed)
+- Replace Journey with EnhancedJourneySection (cinematic 8-chapter timeline)
+- Add CGMSection (glucose chart preserved from old Journey)
+- Replace Vision with FutureVisionSection (background image now visible in light+dark)
+- Add CSS variable aliases for Phase 5 component compatibility
+- Fix contact form input visibility in dark mode
+- Fix sticky header rgba() CSS cross-browser bug
+- Fix TypeScript parse errors in PhilosophyQuoteSection strings
+- Remove all unused imports across new components"
+
+# Push to main (or your branch)
 git push origin main
 ```
 
 ---
 
-## 6. File structure reference
+### Step 9 — Vercel auto-deploy
 
-```
-bb-portfolio/
-├── app/
-│   ├── globals.css        ← design tokens + ALL premium-effect CSS
-│   ├── layout.tsx         ← renders AmbientBackground/PremiumCursor
-│   ├── page.tsx           ← section order (updated Phase 3: TrustBanner added)
-│   └── ...
-├── components/
-│   ├── nav/
-│   │   ├── Navbar.tsx          ← magnetic links
-│   │   ├── ScrollProgress.tsx  ← Phase 3: gradient bar
-│   │   ├── CommandPalette.tsx  ← ⌘K palette (Phase 4: needs glass polish)
-│   │   └── ThemeToggle.tsx
-│   ├── sections/
-│   │   ├── Hero.tsx            ← Phase 3: Ken Burns + typewriter
-│   │   ├── Philosophy.tsx      ← Phase 3: pull quotes + principle cards
-│   │   ├── Journey.tsx         ← Phase 3: fixed alignment + GlucoseChart
-│   │   ├── Focus.tsx           ← unchanged (Phase 1+2 done)
-│   │   ├── BeyondBound.tsx     ← Phase 3: brand badge + animated checklist
-│   │   ├── Impact.tsx          ← Phase 3: accent bars + honesty note
-│   │   ├── Insights.tsx        ← Phase 3: kind badges + LinkedIn CTA
-│   │   ├── ValuesMedia.tsx     ← Phase 3: watermarks + gradient bars
-│   │   ├── PersonalVision.tsx  ← Phase 3: branded blockquote Vision
-│   │   ├── Contact.tsx         ← Phase 1+2 done
-│   │   └── Footer.tsx          ← Phase 3: full 4-column redesign
-│   └── ui/
-│       ├── AmbientBackground.tsx  ← Phase 1
-│       ├── PremiumCursor.tsx      ← Phase 1
-│       ├── ParallaxImage.tsx      ← Phase 2
-│       ├── GlucoseChart.tsx       ← Phase 3 NEW
-│       ├── TrustBanner.tsx        ← Phase 3 NEW
-│       ├── Reveal.tsx / Stagger
-│       ├── CountUp.tsx
-│       ├── SteadyLine.tsx
-│       ├── Section.tsx
-│       └── Icon.tsx
-└── lib/content.ts              ← ALL copy lives here
-```
+Vercel watches `main` by default. After the push, go to your Vercel dashboard and watch the deployment log. It should complete in 60–90 seconds.
+
+Once deployed, check:
+- `https://priyanshu-chauhan.vercel.app/` — full page load
+- Toggle dark mode and scroll the full page
+- Check the Instagram reel loads on mobile (it lazy-loads, so scroll to that section)
 
 ---
 
-## 7. Known sandbox limitation (not a code bug)
+## What Remains for the Next Session
 
-`next build` fails in sandbox only because it can't reach `fonts.googleapis.com`.
-`npx tsc --noEmit` is clean ✓. Local machine and Vercel both deploy fine.
+### High Priority
+- [ ] **Lenis smooth scroll** — install `lenis` and wrap the app for premium feel (partner site likely uses this)
+  ```bash
+  npm install lenis
+  ```
+  Then create `components/providers/SmoothScroll.tsx` and wrap in `app/layout.tsx`.
+
+- [ ] **Hero portrait micro-animation** — subtle scale-up on load:
+  ```tsx
+  // In Hero.tsx on the image wrapper motion.div, add:
+  animate={reduce ? {} : { scale: [0.97, 1] }}
+  transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+  ```
+
+- [ ] **CGM chart "Season 2" toggle** — the chart currently shows static data. Add a "Season 1 / Season 2" tab toggle so visitors see the before/after comparison.
+
+- [ ] **Archive dead code** — after confirming live deploy works:
+  - Delete the `Vision` export from `PersonalVision.tsx` (lines 36–80)
+  - Delete `components/ui/TrustBanner.tsx` entirely
+  - Optionally archive `components/sections/Journey.tsx`
+
+### Medium Priority
+- [ ] **Add `#insight` to nav** in `lib/content.ts` — the HealthcareGap section has `id="insight"` and would benefit from a nav jump link if Priyanshu wants it directly navigable.
+
+- [ ] **Hero typewriter 3rd phrase** — add `"Building India's Most Honest Health Brand"` to the typewriter cycle in `Hero.tsx`.
+
+- [ ] **preload hints** for above-fold images:
+  ```tsx
+  // In app/layout.tsx <head>:
+  <link rel="preload" as="image" href="/images/priyanshu-portrait.png" />
+  ```
+
+### Low Priority
+- [ ] Color token audit — a few hardcoded `#hex` values in older sections should be migrated to `rgb(var(--petrol))` etc.
+- [ ] `loading="lazy"` on all below-fold `<Image />` components.
+
+---
+
+## Technical Reference
+
+### CSS Variables
+
+The project uses two sets of CSS custom properties that now coexist:
+
+**Project tokens** (raw channel numbers, used with `rgb(var(--token))`):
+```
+--paper, --surface, --mist, --ink, --slate, --line, --petrol, --sprout
+```
+
+**Phase 5 compatibility aliases** (resolved values, used directly):
+```
+--background  →  rgb(var(--paper))
+--foreground  →  rgb(var(--ink))
+--muted-foreground  →  rgb(var(--slate))
+--border  →  rgb(var(--line))
+--card  →  rgb(var(--surface))
+--background-rgb  →  "250, 250, 248" (light) / "11, 20, 19" (dark)
+```
+
+### Dependencies Added: None
+All Phase 5 components use only `framer-motion` and `react` — already in the project.
+
+### Instagram Embed Notes
+- Reel URL: `https://www.instagram.com/reel/DUNpGpFjFYv/`
+- Embed script loaded lazily via `useInView` — only fires when section enters viewport
+- Known: ~300ms render delay — placeholder handles it
+- Known: if reel is made private or deleted, the embed silently fails — placeholder remains visible

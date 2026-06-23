@@ -13,6 +13,14 @@
   --petrol: 14 92 87; /* #0E5C57 */
   --sprout: 47 163 124; /* #2FA37C */
   --danger: 188 58 58; /* #BC3A3A — used only for form/error states, never decorative */
+
+  /* ── Compatibility aliases for Phase 4 components ── */
+  --background: rgb(var(--paper));
+  --foreground: rgb(var(--ink));
+  --muted-foreground: rgb(var(--slate));
+  --border: rgb(var(--line));
+  --card: rgb(var(--surface));
+  --background-rgb: 250, 250, 248;
 }
 
 .dark {
@@ -26,6 +34,14 @@
   --petrol: 90 196 184; /* brighter teal for contrast */
   --sprout: 74 197 154; /* #4AC59A */
   --danger: 224 110 110; /* #E06E6E */
+
+  /* ── Compatibility aliases for Phase 4 components (dark) ── */
+  --background: rgb(var(--paper));
+  --foreground: rgb(var(--ink));
+  --muted-foreground: rgb(var(--slate));
+  --border: rgb(var(--line));
+  --card: rgb(var(--surface));
+  --background-rgb: 11, 20, 19;
 }
 
 * {
@@ -360,4 +376,80 @@ body {
   .animate-blink,
   .chip-float { animation: none; }
   .trust-ticker { animation: none; }
+}
+/* ══════════════════════════════════════════════════════════
+   PHASE 4 GLOBAL ENHANCEMENTS
+   ══════════════════════════════════════════════════════════ */
+
+/* ── Suppress marquee (TrustBanner replaced by CredentialsBelt) ── */
+.marquee-section,
+[class*="marquee"],
+[class*="Marquee"],
+.ticker-wrap,
+.ticker {
+  display: none !important;
+}
+
+/* ── Instagram embed mobile overflow fix ── */
+.instagram-media,
+.instagram-media iframe {
+  max-width: 100% !important;
+  border-radius: 12px !important;
+}
+
+/* ── Future Vision: force text to always read on dark overlay ── */
+section[aria-label="Future Vision"] *,
+.fv-content * {
+  color: #ffffff;
+}
+.fv-pillar-label {
+  color: #86efac !important;
+}
+
+/* ── Dark-mode contrast improvements ── */
+.dark .creds-eyebrow,
+.dark .pq-eyebrow,
+.dark .lessons-eyebrow,
+.dark .ig-eyebrow,
+.dark .journey-eyebrow {
+  color: rgba(156, 176, 170, 0.8) !important;
+}
+
+/* ── Stat number tabular numerals (Phase 4 belt) ── */
+.stat-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* ── CredentialsBelt dark mode card override ── */
+.dark .cred-item {
+  background: rgb(var(--surface)) !important;
+}
+.dark .cred-item:hover {
+  background: rgba(255,255,255,0.06) !important;
+}
+.dark .lesson-card {
+  background: rgb(var(--surface)) !important;
+}
+.dark .lessons-section {
+  background: rgba(255,255,255,0.02) !important;
+}
+
+/* ── Print styles ── */
+@media print {
+  nav,
+  .creds-belt,
+  [class*="sticky"],
+  [class*="fixed"] {
+    display: none !important;
+  }
+}
+
+/* ── Contact form: dark mode input visibility ── */
+.dark .input {
+  background: rgb(var(--surface)) !important;
+  color: rgb(var(--ink)) !important;
+}
+.dark .input option {
+  background: rgb(var(--surface));
 }
