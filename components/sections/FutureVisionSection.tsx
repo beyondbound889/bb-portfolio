@@ -44,9 +44,9 @@ export default function FutureVisionSection() {
 
           <ul className="fv-pillars" aria-label="Vision pillars">
             <li className="fv-pillar">
-              <span className="fv-pillar-label">Preventive, not reactive.</span>
+              <span className="fv-pillar-label">Proactive, not reactive.</span>
               <span className="fv-pillar-text">
-                We will stop waiting for a diagnosis to start paying attention.
+                We stop waiting for a diagnosis before we start paying attention.
               </span>
             </li>
             <li className="fv-pillar">

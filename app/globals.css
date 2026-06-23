@@ -453,3 +453,114 @@ section[aria-label="Future Vision"] *,
 .dark .input option {
   background: rgb(var(--surface));
 }
+/* ══════════════════════════════════════════════════════════
+   PHASE 5 ENHANCEMENTS — Premium feel upgrades
+   ══════════════════════════════════════════════════════════ */
+
+/* Credential pill hover shimmer */
+.cred-pill {
+  position: relative;
+  overflow: hidden;
+}
+.cred-pill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255,255,255,0.12) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  pointer-events: none;
+}
+.cred-pill:hover::after {
+  transform: translateX(100%);
+}
+
+/* Journey chapter hover — subtle left accent */
+.journey-chapter {
+  position: relative;
+}
+.journey-chapter::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, rgb(var(--petrol)), rgb(var(--sprout)));
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: opacity 0.3s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.journey-chapter:hover::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Btn shine animation */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255,255,255,0.12) 50%,
+    transparent 80%
+  );
+  transform: translateX(-100%);
+}
+.btn-shine:hover::after {
+  animation: shine 0.6s ease forwards;
+}
+@keyframes shine {
+  to { transform: translateX(100%); }
+}
+
+/* Smooth section transitions */
+section {
+  contain: layout style;
+}
+
+/* Enhanced dark mode: soft glowing dividers */
+.dark section {
+  border-color: rgba(255,255,255,0.06);
+}
+
+/* Chapter year glow on hover — dark mode */
+:global(.dark) .journey-chapter:hover .chapter-year {
+  text-shadow: 0 0 60px rgba(90, 196, 184, 0.2);
+}
+
+/* Premium scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--petrol) / 0.3);
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--petrol) / 0.6);
+}
+
+/* Instagram embed — better rendered size */
+.igv-embed-inner .instagram-media {
+  min-height: 600px !important;
+}
+.igv-embed-inner iframe {
+  min-height: 600px !important;
+}
+
+/* Stat card color variants in CredentialsBelt */
+.stat-card--petrol { background: var(--background); }
+.stat-card--sprout { background: var(--background); }

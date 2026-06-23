@@ -29,7 +29,7 @@ export const site = {
   url: "https://beyondbound.co",
   location: "India",
   tagline:
-    "Building preventive healthcare India can actually trust — measured, not marketed.",
+    "Building evidence-led healthcare India can actually trust — measured, not marketed.",
 };
 
 export const nav: NavItem[] = [
@@ -43,7 +43,7 @@ export const nav: NavItem[] = [
 
 export const hero = {
   eyebrow: "Founder & Director — Beyond Bound®",
-  headline: ["Preventive healthcare", "India can actually trust."],
+  headline: ["Evidence-led healthcare", "India can actually trust."],
   sub: "I’m Priyanshu Chauhan — a healthcare founder building evidence-driven wellness products that earn trust the slow way: by measuring them. Beyond Bound® starts with metabolic health, where small, steady changes quietly decide long-term outcomes.",
   credentials: [
     { label: "Founder & Director", sub: "Beyond Bound®" },
@@ -91,7 +91,7 @@ export const journey: JourneyStage[] = [
     index: "04",
     title: "Founding Beyond Bound®",
     period: "Founder & Director", // TODO(verify): exact founding year
-    body: "Started Beyond Bound on one belief: people deserve health solutions they can trust. A registered brand focused on preventive, metabolic wellness for everyday Indian life.",
+    body: "Started Beyond Bound on one belief: people deserve health solutions they can trust. A registered brand focused on metabolic wellness for everyday Indian life.",
     proof: "Beyond Bound® — registered brand",
   },
   {
@@ -165,11 +165,11 @@ export const focusAreas: FocusArea[] = [
 export const beyondBound = {
   eyebrow: "The company",
   title: "Beyond Bound®",
-  lede: "A preventive-healthcare brand for everyday India — starting where the quiet damage starts: metabolism.",
+  lede: "A science-led wellness brand for everyday India — starting where the quiet damage starts: metabolism.",
   mission:
     "Make trustworthy, science-led wellness a default — not a luxury — for people who want to stay ahead of their health rather than react to it.",
   vision:
-    "An India where preventive care is normal, measured, and affordable, and where ‘natural’ and ‘evidence-based’ are no longer opposites.",
+    "An India where metabolic care is normal, measured, and affordable, and where ‘natural’ and ‘evidence-based’ are no longer opposites.",
   approachTitle: "The approach: measure first, market second",
   approach: [
     "Start with the body’s own rhythm, not a crash protocol.",
@@ -302,6 +302,6 @@ export const vision = {
 export const contact = {
   eyebrow: "Contact",
   title: "Let’s build something worth trusting.",
-  sub: "Open to partnerships, retail and distribution, speaking, and serious conversations about preventive healthcare.",
+  sub: "Open to partnerships, retail and distribution, speaking, and serious conversations about evidence-led healthcare.",
   reasons: ["Partnership", "Speaking / Event", "Business opportunity", "Press / Media", "Other"],
 };

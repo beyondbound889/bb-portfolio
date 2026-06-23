@@ -189,23 +189,31 @@ export default function PhilosophyQuoteSection() {
         .lessons-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-          gap: 1px;
-          background: var(--border, rgba(0,0,0,0.07));
-          border: 1px solid var(--border, rgba(0,0,0,0.07));
-          border-radius: 14px;
-          overflow: hidden;
+          gap: 1.5rem;
         }
         .lesson-card {
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
-          padding: 2rem;
+          gap: 0.6rem;
+          padding: 2rem 1.8rem;
           background: var(--background);
-          transition: background 0.2s;
+          border: 1px solid var(--border, rgba(0,0,0,0.07));
+          border-radius: 16px;
+          transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
         }
-        .lesson-card:hover { background: var(--card, #f3f4f6); }
-        :global(.dark) .lesson-card { background: var(--card, #111827); }
-        :global(.dark) .lesson-card:hover { background: rgba(255,255,255,0.05); }
+        .lesson-card:hover {
+          border-color: rgba(14, 92, 87, 0.25);
+          box-shadow: 0 12px 40px -16px rgba(14, 92, 87, 0.18);
+          transform: translateY(-2px);
+        }
+        :global(.dark) .lesson-card {
+          background: rgba(255,255,255,0.03);
+          border-color: rgba(255,255,255,0.07);
+        }
+        :global(.dark) .lesson-card:hover {
+          background: rgba(255,255,255,0.05);
+          border-color: rgba(90, 196, 184, 0.2);
+        }
         .lesson-num {
           font-size: 0.68rem;
           letter-spacing: 0.16em;
@@ -219,7 +227,7 @@ export default function PhilosophyQuoteSection() {
         }
         .lesson-text {
           font-size: 0.88rem;
-          line-height: 1.65;
+          line-height: 1.7;
           color: var(--muted-foreground, #6b7280);
           margin: 0;
           font-style: italic;

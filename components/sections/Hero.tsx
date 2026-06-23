@@ -18,8 +18,9 @@ const PHOTOS = [
 const TYPEWRITER_WORDS = [
   "India can actually trust.",
   "earns trust through proof.",
-  "starts with your glucose.",
-  "is measured, not marketed.",
+  "measured by the founder first.",
+  "built on real data, not claims.",
+  "is science-led, not marketed.",
 ];
 
 function TypewriterText({ words }: { words: string[] }) {
@@ -93,7 +94,7 @@ export function Hero() {
 
           <h1 className="mt-7 font-display text-[2.6rem] font-semibold leading-[1.04] tracking-tightest text-ink sm:text-5xl lg:text-[3.4rem]">
             <motion.span {...rise(0.08)} className="block">
-              Preventive healthcare
+              Evidence-led healthcare
             </motion.span>
             <motion.span {...rise(0.15)} className="mt-1 block min-h-[1.2em]">
               <TypewriterText words={TYPEWRITER_WORDS} />
